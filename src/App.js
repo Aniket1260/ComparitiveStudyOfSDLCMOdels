@@ -7,7 +7,7 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 
 const menuOptions = [
   {
@@ -24,12 +24,118 @@ const menuOptions = [
   },
 ];
 
+const modelList = [
+  {
+    name: "V-shaped Model",
+    req: 1,
+    tech: 1,
+    complex: 2,
+    time: 1,
+    cost: 1,
+    skill: 2,
+  },
+  {
+    name: "Waterfall Model",
+    req: 1,
+    tech: 1,
+    complex: 2,
+    time: 1,
+    cost: 1,
+    skill: 2,
+  },
+  {
+    name: "Incremental Model",
+    req: 2,
+    tech: 2,
+    complex: 2,
+    time: 3,
+    cost: 3,
+    skill: 2,
+  },
+  {
+    name: "Spiral Model",
+    req: 3,
+    tech: 3,
+    complex: 3,
+    time: 1,
+    cost: 3,
+    skill: 1,
+  },
+  {
+    name: "Evolutionary Prototyping",
+    req: 2,
+    tech: 3,
+    complex: 1,
+    time: 2,
+    cost: 1,
+    skill: 1,
+  },
+  {
+    name: "RAD Model",
+    req: 3,
+    tech: 2,
+    complex: 2,
+    time: 3,
+    cost: 3,
+    skill: 1,
+  },
+  {
+    name: "Agile Model",
+    req: 3,
+    tech: 1,
+    complex: 2,
+    time: 3,
+    cost: 3,
+    skill: 1,
+  },
+];
+
 function App() {
   const [requirements, setRequirements] = React.useState("");
+  const [technology, setTechnology] = React.useState("");
+  const [complexity, setComplexity] = React.useState("");
+  const [timeLimit, setTimeLimit] = React.useState("");
+  const [costExpense, setCostExpense] = React.useState("");
+  const [skills, setSkills] = React.useState("");
+  const [model, setModel] = React.useState(["-"]);
 
-  const handleChange = (event) => {
+  const handleReqChange = (event) => {
     setRequirements(event.target.value);
   };
+  const handleTechChange = (event) => {
+    setTechnology(event.target.value);
+  };
+  const handleComplexChange = (event) => {
+    setComplexity(event.target.value);
+  };
+  const handleTimeChange = (event) => {
+    setTimeLimit(event.target.value);
+  };
+  const handleCostChange = (event) => {
+    setCostExpense(event.target.value);
+  };
+  const handleSkillChange = (event) => {
+    setSkills(event.target.value);
+  };
+
+  useEffect(() => {
+    let modelArr = [
+      ...modelList.filter(
+        (ele) =>
+          ele.req == requirements &&
+          ele.tech == technology &&
+          ele.complex == complexity &&
+          ele.time == timeLimit &&
+          ele.cost == costExpense &&
+          ele.skill == skills
+      ),
+    ];
+    if (modelArr.length == 0) {
+      setModel([{ name: "-" }]);
+    } else {
+      setModel(modelArr);
+    }
+  }, [requirements, technology, complexity, timeLimit, costExpense, skills]);
 
   return (
     <div className="App">
@@ -48,7 +154,7 @@ function App() {
           <Select
             value={requirements}
             label="Requirement Clarity"
-            onChange={handleChange}
+            onChange={handleReqChange}
           >
             {menuOptions.map((ele, id) => (
               <MenuItem key={`Requirement-${id}`} value={ele.value}>
@@ -60,9 +166,9 @@ function App() {
         <FormControl fullWidth sx={{ mb: 2 }}>
           <InputLabel>Technology</InputLabel>
           <Select
-            value={requirements}
+            value={technology}
             label="Technology"
-            onChange={handleChange}
+            onChange={handleTechChange}
           >
             {menuOptions.map((ele, id) => (
               <MenuItem key={`Texhno-${id}`} value={ele.value}>
@@ -74,9 +180,9 @@ function App() {
         <FormControl fullWidth sx={{ mb: 2 }}>
           <InputLabel>Complexity</InputLabel>
           <Select
-            value={requirements}
+            value={complexity}
             label="Complexity"
-            onChange={handleChange}
+            onChange={handleComplexChange}
           >
             {menuOptions.map((ele, id) => (
               <MenuItem key={`complex-${id}`} value={ele.value}>
@@ -88,9 +194,9 @@ function App() {
         <FormControl fullWidth sx={{ mb: 2 }}>
           <InputLabel>Time Limit</InputLabel>
           <Select
-            value={requirements}
+            value={timeLimit}
             label="Time Limit"
-            onChange={handleChange}
+            onChange={handleTimeChange}
           >
             {menuOptions.map((ele, id) => (
               <MenuItem key={`time-${id}`} value={ele.value}>
@@ -102,9 +208,9 @@ function App() {
         <FormControl fullWidth sx={{ mb: 2 }}>
           <InputLabel>Cost Expense</InputLabel>
           <Select
-            value={requirements}
+            value={costExpense}
             label="Cost Expense"
-            onChange={handleChange}
+            onChange={handleCostChange}
           >
             {menuOptions.map((ele, id) => (
               <MenuItem key={`cost-${id}`} value={ele.value}>
@@ -115,7 +221,7 @@ function App() {
         </FormControl>
         <FormControl fullWidth sx={{ mb: 2 }}>
           <InputLabel>Skills</InputLabel>
-          <Select value={requirements} label="Skills" onChange={handleChange}>
+          <Select value={skills} label="Skills" onChange={handleSkillChange}>
             {menuOptions.map((ele, id) => (
               <MenuItem key={`skill-${id}`} value={ele.value}>
                 {ele.text}
@@ -139,7 +245,13 @@ function App() {
           mt={2}
           mb={10}
         >
-          Trst
+          {model.map((ele) =>
+            model.length == 1 ? (
+              <span>{ele.name}</span>
+            ) : (
+              <span>{ele.name}, </span>
+            )
+          )}
         </Typography>
       </Container>
     </div>
