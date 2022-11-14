@@ -122,15 +122,15 @@ function App() {
     let modelArr = [
       ...modelList.filter(
         (ele) =>
-          ele.req == requirements &&
-          ele.tech == technology &&
-          ele.complex == complexity &&
-          ele.time == timeLimit &&
-          ele.cost == costExpense &&
-          ele.skill == skills
+          ele.req === requirements &&
+          ele.tech === technology &&
+          ele.complex === complexity &&
+          ele.time === timeLimit &&
+          ele.cost === costExpense &&
+          ele.skill === skills
       ),
     ];
-    if (modelArr.length == 0) {
+    if (modelArr.length === 0) {
       setModel([{ name: "-" }]);
     } else {
       setModel(modelArr);
@@ -246,7 +246,7 @@ function App() {
           mb={10}
         >
           {model.map((ele) =>
-            model.length == 1 ? (
+            model.length === 1 ? (
               <span>{ele.name}</span>
             ) : (
               <span>{ele.name}, </span>
